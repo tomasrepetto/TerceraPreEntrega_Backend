@@ -1,13 +1,8 @@
 import { cartModel } from "../models/cartsModel.js";
 
-export const getCartsByIdService = async (cid) => {
-    try{
-        return await cartModel.findById(cid).populate('products.id').lean();
-    } catch (error) {
-        console.log('getCartsByIdService -> ', error);
-        throw error;
-    }
-}
+export const getCartsByIdService = async (id) => {
+    return await cartModel.findById(id).populate('products.productId');
+};
 
 export const createCartService = async () => {
     try{

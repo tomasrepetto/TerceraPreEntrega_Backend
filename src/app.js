@@ -9,10 +9,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-console.log('PORT:', process.env.PORT);
-console.log('MONGO_URL:', process.env.MONGO_URL);
-console.log('SESSION_SECRET:', process.env.SESSION_SECRET);
-
 import products from './routers/products.js';
 import carts from './routers/carts.js';
 import views from './routers/views.js';

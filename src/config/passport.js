@@ -11,11 +11,9 @@ export const initializaPassport = () => {
         async (email, password, done) => {
             try {
                 const user = await getUserByEmail(email);
-
                 if (!user || !isValidPassword(password, user.password)) {
                     return done(null, false, { message: 'Invalid credentials' });
                 }
-
                 return done(null, user);
             } catch (error) {
                 return done(error);
