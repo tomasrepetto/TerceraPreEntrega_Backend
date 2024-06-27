@@ -1,13 +1,15 @@
-import { request, response } from "express";
+import { request, response } from 'express';
 
 export const auth = (req = request, res = response, next) => {
-    if(req.session?.user)
+    if (req.isAuthenticated()) {
         return next();
-    return res.redirect('/login');
-}
+    }
+    res.status(401).json({ message: 'Unauthorized' });
+};
 
 export const admin = (req = request, res = response, next) => {
-    if(req.session?.rol === 'admin')
+    if (req.isAuthenticated() && req.user.role === 'admin') {
         return next();
-    return res.redirect('/');
-}
+    }
+    res.status(403).json({ message: 'Forbidden' });
+};

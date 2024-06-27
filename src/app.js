@@ -7,10 +7,8 @@ import MongoStore from "connect-mongo";
 import passport from "passport";
 import dotenv from 'dotenv';
 
-// Cargar variables de entorno desde el archivo .env
 dotenv.config();
 
-// Imprimir variables de entorno para depuración
 console.log('PORT:', process.env.PORT);
 console.log('MONGO_URL:', process.env.MONGO_URL);
 console.log('SESSION_SECRET:', process.env.SESSION_SECRET);
@@ -27,7 +25,6 @@ import { initializaPassport } from "./config/passport.js";
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Verificar si las variables de entorno críticas están definidas
 if (!process.env.MONGO_URL) {
     throw new Error('MONGO_URL is not defined in the environment variables.');
 }
@@ -102,8 +99,3 @@ try {
 } catch (error) {
     console.error('Error connecting to the database:', error);
 }
-
-
-
-
-

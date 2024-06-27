@@ -2,7 +2,8 @@ import { Router } from 'express';
 import { authorize } from '../middleware/authMiddleware.js';
 import { Ticket } from '../models/ticketModel.js';
 import { addProductInCart, createCart, deleteCart, deleteProductsInCart, getCartsById, updateCart, updateProductsInCart } from '../dao/DB/cartsDB.js';
-
+import { getCartsByIdService } from '../dao/cartsMongo.js';
+import { productModel } from '../models/productsModel.js';
 
 const router = Router();
 
@@ -14,7 +15,10 @@ router.put('/:cid', updateCart);
 router.put('/:cid/products/:pid', updateProductsInCart);
 router.delete('/:cid', deleteCart);
 
-router.post('/:cid/purchase', authorize(['user']), async (req, res) => {
+router.post('/:cid/purchase', (req, res, next) => {
+    console.log('User:', req.user); // Verificar que req.user esté definido
+    next();
+}, authorize(['user']), async (req, res) => {
     try {
         const { cid } = req.params;
         const cart = await getCartsByIdService(cid);
