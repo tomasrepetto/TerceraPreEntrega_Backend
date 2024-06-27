@@ -8,7 +8,7 @@ export const auth = (req = request, res = response, next) => {
 };
 
 export const admin = (req = request, res = response, next) => {
-    if (req.isAuthenticated() && req.user.role === 'admin') {
+    if (req.isAuthenticated() && req.user.rol === 'user') {
         return next();
     }
     res.status(403).json({ message: 'Forbidden' });

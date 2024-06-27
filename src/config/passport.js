@@ -1,16 +1,16 @@
 import passport from 'passport';
 import local from 'passport-local';
 import { getUserByEmail, getUserById } from '../dao/userMongo.js';
-import { createHash, isValidPassword } from '../utils/bcryptPassword.js';
+import { isValidPassword } from '../utils/bcryptPassword.js';
 
 const LocalStrategy = local.Strategy;
 
 export const initializaPassport = () => {
     passport.use('login', new LocalStrategy(
         { usernameField: 'email' },
-        async (username, password, done) => {
+        async (email, password, done) => {
             try {
-                const user = await getUserByEmail(username);
+                const user = await getUserByEmail(email);
 
                 if (!user || !isValidPassword(password, user.password)) {
                     return done(null, false, { message: 'Invalid credentials' });

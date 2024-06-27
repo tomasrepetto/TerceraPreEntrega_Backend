@@ -10,7 +10,7 @@ export const authorize = (roles = []) => {
         if (!req.isAuthenticated()) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        if (!roles.includes(req.user.role)) {
+        if (!roles.includes(req.user.rol)) {
             return res.status(403).json({ message: 'Forbidden' });
         }
         next();
