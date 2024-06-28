@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import { engine } from 'express-handlebars';
 import { Server } from 'socket.io';
@@ -5,14 +8,12 @@ import path from 'path';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 import products from './routers/products.js';
 import carts from './routers/carts.js';
 import views from './routers/views.js';
-import tickets from './routers/tickets.js'; // Importa el router de tickets
+import tickets from './routers/tickets.js';
+import auth from './routers/auth.js'; // Importa el router de autenticación
 import { dirname } from './utils.js';
 import { dbConnection } from './config/config.js';
 import { messageModel } from './models/messagesModel.js';
@@ -55,7 +56,8 @@ app.set('view engine', 'handlebars');
 app.use('/', views);
 app.use('/api/products', products);
 app.use('/api/carts', carts);
-app.use('/api/tickets', tickets); // Registra el router de tickets
+app.use('/api/tickets', tickets);
+app.use('/api/auth', auth); // Registra el router de autenticación
 
 try {
     await dbConnection();
