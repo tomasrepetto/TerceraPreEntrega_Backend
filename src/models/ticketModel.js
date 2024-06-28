@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
 
 const ticketSchema = new mongoose.Schema({
-    amount: { type: Number, required: true },
-    purchaser: { type: String, required: true }
-}, { timestamps: true });
+    code: {
+        type: String,
+        unique: true,
+        required: true
+    },
+});
 
-export const Ticket = mongoose.model('Ticket', ticketSchema);
+export const ticketModel = mongoose.model('Ticket', ticketSchema);

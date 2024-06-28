@@ -1,10 +1,10 @@
-import express from "express";
+import express from 'express';
 import { engine } from 'express-handlebars';
-import { Server } from "socket.io";
+import { Server } from 'socket.io';
 import path from 'path';
-import session from "express-session";
-import MongoStore from "connect-mongo";
-import passport from "passport";
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import passport from 'passport';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,11 +12,12 @@ dotenv.config();
 import products from './routers/products.js';
 import carts from './routers/carts.js';
 import views from './routers/views.js';
+import tickets from './routers/tickets.js'; // Importa el router de tickets
 import { dirname } from './utils.js';
-import { dbConnection } from "./config/config.js";
-import { messageModel } from "./models/messagesModel.js";
-import { addProductService, getProductsService } from "./dao/productsMongo.js";
-import { initializaPassport } from "./config/passport.js";
+import { dbConnection } from './config/config.js';
+import { messageModel } from './models/messagesModel.js';
+import { addProductService, getProductsService } from './dao/productsMongo.js';
+import { initializaPassport } from './config/passport.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -54,6 +55,7 @@ app.set('view engine', 'handlebars');
 app.use('/', views);
 app.use('/api/products', products);
 app.use('/api/carts', carts);
+app.use('/api/tickets', tickets); // Registra el router de tickets
 
 try {
     await dbConnection();

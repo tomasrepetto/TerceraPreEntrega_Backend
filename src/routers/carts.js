@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authorize } from '../middleware/authMiddleware.js';
-import { Ticket } from '../models/ticketModel.js';
+import { ticketModel } from '../models/ticketModel.js';
 import { addProductInCart, createCart, deleteCart, deleteProductsInCart, getCartsById, updateCart, updateProductsInCart } from '../dao/DB/cartsDB.js';
 import { cartModel } from '../models/cartsModel.js'; // Importa el modelo Cart correctamente
 import { productModel } from '../models/productsModel.js';
@@ -76,7 +76,7 @@ router.post('/:cid/purchase', (req, res, next) => {
             }
         }
 
-        const ticket = await Ticket.create({
+        const ticket = await ticketModel.create({
             amount,
             purchaser: req.user.email
         });
