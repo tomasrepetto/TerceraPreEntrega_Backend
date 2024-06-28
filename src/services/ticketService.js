@@ -4,7 +4,6 @@ export const createTicketService = async (ticketData) => {
     try {
         const newCode = generateUniqueCode(); 
         const ticket = new ticketModel({ ...ticketData, code: newCode });
-        console.log('Generated ticket:', ticket); // Log para verificar que el código se genera
         await ticket.save();
         return ticket;
     } catch (error) {

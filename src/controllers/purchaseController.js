@@ -1,3 +1,6 @@
+import { createTicketService } from '../services/ticketService.js';
+import { getCartByIdService } from '../services/cartService.js';
+
 export const purchase = async (req, res) => {
     const cartId = req.params.cid;
     try {
@@ -6,12 +9,24 @@ export const purchase = async (req, res) => {
             return res.status(404).json({ message: 'Cart not found' });
         }
 
+        // Verifica que los productos están poblados correctamente
+        if (!cart.products || cart.products.length === 0) {
+            return res.status(400).json({ message: 'Cart is empty or products are not populated' });
+        }
+
+        const amount = cart.products.reduce((acc, item) => {
+            if (item.productId && item.productId.price) {
+                return acc + item.productId.price * item.quantity;
+            }
+            return acc;
+        }, 0);
+
         const ticketData = {
             userId: req.user._id,
             cartId: cart._id,
+            amount: amount,
+            purchaser: req.user.email,
         };
-
-        console.log('Ticket data before creation:', ticketData);
 
         const ticket = await createTicketService(ticketData);
         res.status(201).json({ message: 'Purchase successful', ticket });

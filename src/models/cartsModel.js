@@ -1,13 +1,20 @@
 import mongoose from 'mongoose';
 
 const cartSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     products: [
         {
-            productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
-            quantity: { type: Number, required: true }
+            productId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product', // Asegúrate de que la referencia es correcta
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
         }
     ]
-}, { timestamps: true });
+    // Otros campos del carrito
+});
 
 export const cartModel = mongoose.model('Cart', cartSchema);
