@@ -32,18 +32,32 @@ export const addProductInCart = async (req, res) => {
 
         console.log('Product found:', product);
 
-        // Asignar productId directamente desde el objeto product
         const productId = product._id;
-        console.log('productId:', productId); // Log para depuración
+        console.log('productId:', productId); 
 
-        const productInCart = cart.products.find(item => item.productId && item.productId.equals(productId));
+        if (!productId) {
+            console.error('productId es undefined');
+            return res.status(400).json({ message: 'productId es undefined' });
+        }
+
+        if (!(productId instanceof mongoose.Types.ObjectId)) {
+            console.error('productId no es un ObjectId');
+            return res.status(400).json({ message: 'productId no es un ObjectId' });
+        }
+
+        let productInCart = cart.products.find(item => item.productId && item.productId.equals(productId));
         if (productInCart) {
             productInCart.quantity += quantity;
         } else {
-            cart.products.push({ productId: productId, quantity });
+            productInCart = { productId: productId, quantity: quantity };
+            console.log('Añadiendo productInCart:', productInCart);
+            cart.products.push(productInCart);
         }
 
+        console.log('Cart antes de guardar:', JSON.stringify(cart, null, 2));
+
         await cart.save();
+        console.log('Cart después de guardar:', JSON.stringify(cart, null, 2));
         res.status(200).json(cart);
     } catch (error) {
         console.error('Error adding product to cart:', error);

@@ -9,6 +9,6 @@ const productSchema = new mongoose.Schema({
     stock: { type: Number, required: true },
     category: { type: String, required: true },
     status: { type: Boolean, default: true }
-}, { collection: 'productos' });  // Asegúrate de que la colección es 'productos'
+}, { collection: 'productos' });  
 
 export const productModel = mongoose.model('Product', productSchema);

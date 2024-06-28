@@ -1,17 +1,27 @@
 import mongoose from 'mongoose';
 
 const ticketSchema = new mongoose.Schema({
-    code: {
+    purchaser: {
         type: String,
-        unique: true,
         required: true
     },
     amount: {
         type: Number,
         required: true
     },
-    purchaser: {
+    cartId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cart',
+        required: true
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    code: {
         type: String,
+        unique: true,
         required: true
     }
 });

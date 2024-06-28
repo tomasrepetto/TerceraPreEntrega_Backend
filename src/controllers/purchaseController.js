@@ -9,7 +9,6 @@ export const purchase = async (req, res) => {
             return res.status(404).json({ message: 'Cart not found' });
         }
 
-        // Verifica que los productos están poblados correctamente
         if (!cart.products || cart.products.length === 0) {
             return res.status(400).json({ message: 'Cart is empty or products are not populated' });
         }

@@ -13,7 +13,6 @@ export const authorize = (roles = []) => {
             return res.status(401).json({ message: 'Unauthorized' });
         }
         if (!roles.includes(req.user.rol)) {
-            // Obtener el carrito del usuario si no tiene el rol necesario
             try {
                 const carrito = await getCartsByIdService(req.user.cartId);
                 if (carrito) {
